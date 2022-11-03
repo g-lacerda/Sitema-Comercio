@@ -284,6 +284,24 @@ public class Metodos {
 
 		return info;
 	}
+	
+	public String consultaVenda (int id) {
+		String info = "";
+		HistoricoVenda consultavenda = new HistoricoVenda();
+		consultavenda = this.vendas.get(id-1);
+		info = ("Cliente: " + consultavenda.getNomeCliente() + "\n"+
+				"Produto: " + consultavenda.getNomeProduto() + "\n"+
+				"Quantidade: " + consultavenda.getQtdProduto() + "\n"+
+				"Data: " + consultavenda.getData() + "\n"+
+				"Valor unitário: R$" + consultavenda.getValorProduto() + "\n"+
+				"Valor total: R$" + consultavenda.getValorTotal());
+		if (consultavenda.getDevolucao()) 
+			info = info + ("\nPossui devolução: Sim" );
+		
+		else
+			info = info + ("\nPossui devolução: Não" );
+		return info;
+	}
 
 	public String montaPaginaCliente(int pagina, ArrayList<String> sublista, String lista, int totalItens) {
 

@@ -437,11 +437,12 @@ public class Metodos {
 	public String consultaUsuario (int id) {
 		Usuario usuario = new Usuario();
 		usuario = this.usuarios.get(id-1);
-		info = ("Usu�rio: " +usuario.getUsuario()
+		String info = "";
+		info = ("Usuário: " +usuario.getUsuario()
 		+ "\nNome: " + usuario.getNome()
 		+ "\nEmail: " + usuario.getEmail()
 		+ "\nTelefone: " + usuario.getTelefone()
-		+ "\nData de cria��o: " + usuario.getDataCriacao());
+		+ "\nData de criação: " + usuario.getDataCriacao());
 
 		return info;
 	}
@@ -461,16 +462,7 @@ public class Metodos {
 	}
 
 
-	public String consultaUsuario (int id) {
-		Usuario usuario = new Usuario();
-		usuario = this.usuarios.get(id-1);
-		info = ("Usu�rio: " +usuario.getUsuario()
-		+ "\nNome: " + usuario.getNome()
-		+ "\nEmail: " + usuario.getEmail()
-		+ "\nTelefone: " + usuario.getTelefone()
-		+ "\nData de cria��o: " + usuario.getDataCriacao());
-
-	}
+	
 
 
 

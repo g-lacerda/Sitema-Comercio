@@ -1,8 +1,6 @@
-
-/**
- * @author Guilherme Lacerda
- *
- */
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 public class Estoque {
 
 	private int id;
@@ -12,6 +10,7 @@ public class Estoque {
 	private double valor;
 	private int idInterno;
 	private int qtd;
+	private String data;
 
 
 	public Estoque () {
@@ -26,6 +25,7 @@ public class Estoque {
 		this.valor = valor;
 		this.qtd = qtd;
 		this.idInterno = idInterno;
+		this.data = getDateTime();
 	}
 
 	public int getId() {
@@ -84,7 +84,16 @@ public class Estoque {
 		this.idInterno = idInterno;
 	}
 
-	
+	public String getData() {
+		return data;
+	}
+
+	@SuppressWarnings("unused")
+	private String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 	
 	
 }

@@ -9,16 +9,11 @@ public class Metodos {
 	private ArrayList<Cliente> clientes;
 	private ArrayList<HistoricoVenda> vendas;
 	private ArrayList<Estoque> produtosRemovidos;
+	private ArrayList<Usuario> usuarios;
 	private int totalProdutosRemovidos;
 	private int totalGeralProduto;
 	private int totalGeralCliente;
-
-	public int getTotalProdutos() {
-		return totalProdutos;
-	}
-	public ArrayList<HistoricoVenda> getVendass() {
-		return vendas;
-	}
+	private int totalUsuarios;
 
 	public void adicionaCliente(String nome, String cpf, String cidade, String bairro, String rua, String numero, String telefone) {
 		Cliente cliente = new Cliente(totalClientes, nome, cpf, cidade, bairro, rua, numero, telefone, totalGeralCliente+1);
@@ -203,7 +198,7 @@ public class Metodos {
 				}
 				this.adicionaProduto(produto.getNome(), produto.getFornecedor(), produto.getValor(), qtd);
 				produtosRemovidos.remove(produto);
-				
+
 			}
 			double valorRestante = 0;
 
@@ -265,6 +260,7 @@ public class Metodos {
 		+ "\nBairro: " + cliente.getBairro()
 		+ "\nNúmero: " + cliente.getNumero()
 		+ "\nTelefone: " + cliente.getTelefone()
+		+ "\nData de cadastro: " + cliente.getData()
 		+ "\n\nValor pendente: R$" +cliente.getDividaPendente()
 		+ "\nValor quitado: R$" + cliente.getDividaPaga());
 
@@ -280,11 +276,12 @@ public class Metodos {
 		info = ("Nome: " +produto.getNome()
 		+ "\nFornecedor: " + produto.getFornecedor()
 		+ "\nQuantidade: " + produto.getQtd() + "x"
-		+ "\nValor: R$" + produto.getValor());
+		+ "\nValor: R$" + produto.getValor()
+		+ "\nData de cadastro: " + produto.getData());
 
 		return info;
 	}
-	
+
 	public String consultaVenda (int id) {
 		String info = "";
 		HistoricoVenda consultavenda = new HistoricoVenda();
@@ -297,7 +294,7 @@ public class Metodos {
 				"Valor total: R$" + consultavenda.getValorTotal());
 		if (consultavenda.getDevolucao()) 
 			info = info + ("\nPossui devolução: Sim" );
-		
+
 		else
 			info = info + ("\nPossui devolução: Não" );
 		return info;
@@ -397,20 +394,83 @@ public class Metodos {
 
 
 
+	public void removeUsuario (int id) {
+		Usuario usuario = new Usuario();
+		this.usuarios.remove(id-1);
+		for (int i = 0; i < this.totalUsuarios; i++) {
+			usuario = this.usuarios.get(i);
+			usuario.setId(i+1);
+			usuario.setUsuarioID(usuario.getId() + 1 + "- " + usuario.getUsuario());
+
+		}
+		this.totalUsuarios--;
+	}
+
+	public void adicionaUsuario (String login, String senha, String nome, String email, String telefone) {
+		Usuario usuario = new Usuario(totalUsuarios, login, senha, nome, email, telefone);
+		ArrayList<Usuario> adicionarUsuario = new ArrayList<Usuario>();
+		if (totalUsuarios == 0) {
+			adicionarUsuario.add(usuario);
+			usuarios = adicionarUsuario;
+			this.totalUsuarios++;
+		}
+		else {
+			this.usuarios.add(usuario);
+			totalUsuarios++;
+		}
+	}
+
+	public boolean validaUsuario (String login, String senha) {
+		Usuario usuario = new Usuario();
+		for (int i = 0; i < totalUsuarios; i++){
+			usuario = usuarios.get(i);
+			if (login == usuario.getUsuario()) {
+				if (senha == usuario.getSenha())
+					return true;
+				else
+					return false;
+			}
+		}
+		return false;
+	}
+
+	public String consultaUsuario (int id) {
+		Usuario usuario = new Usuario();
+		usuario = this.usuarios.get(id-1);
+		info = ("Usu�rio: " +usuario.getUsuario()
+		+ "\nNome: " + usuario.getNome()
+		+ "\nEmail: " + usuario.getEmail()
+		+ "\nTelefone: " + usuario.getTelefone()
+		+ "\nData de cria��o: " + usuario.getDataCriacao());
+
+		return info;
+	}
+
+	public String listagemUsuario (int pagina) {
+		String lista = "";
+		Usuario usuario = new Usuario();
+		ArrayList<String> sublista = new ArrayList<String>();
+		for (int i = 0; i < totalUsuarios; i++) {
+			usuario = usuarios.get(i);
+			sublista.add(usuario.getUsuarioID());
+		}
+		pagina--;
+
+		return this.montaPaginaCliente(pagina, sublista, lista, totalUsuarios);
+
+	}
 
 
+	public String consultaUsuario (int id) {
+		Usuario usuario = new Usuario();
+		usuario = this.usuarios.get(id-1);
+		info = ("Usu�rio: " +usuario.getUsuario()
+		+ "\nNome: " + usuario.getNome()
+		+ "\nEmail: " + usuario.getEmail()
+		+ "\nTelefone: " + usuario.getTelefone()
+		+ "\nData de cria��o: " + usuario.getDataCriacao());
 
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 
 
@@ -470,6 +530,8 @@ public class Metodos {
 			return false;
 		}
 		try {
+
+			@SuppressWarnings("unused")
 			double d = Double.parseDouble(strNum);
 		} catch (NumberFormatException nfe) {
 			return false;

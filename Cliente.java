@@ -1,3 +1,6 @@
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 public class Cliente {
 
 	private int id;
@@ -13,6 +16,7 @@ public class Cliente {
 	private double dividaPaga;
 	private double credito;
 	private int idInterno;
+	private String data;
 	
 	public Cliente(int id, String nome, String cpf, String cidade, String bairro, String rua, String numero, String telefone, int idInterno) {
 		this.id = id;
@@ -28,7 +32,7 @@ public class Cliente {
 		this.dividaPendente = 0;
 		this.credito = 0;
 		this.idInterno = idInterno;
-		
+		this.data = getDateTime();
 	}
 	
 	public int getId() {
@@ -126,6 +130,15 @@ public class Cliente {
 		this.idInterno = idInterno;
 	}
 	
+	public String getData() {
+		return data;
+	}
 
+	@SuppressWarnings("unused")
+	private String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 
 }
